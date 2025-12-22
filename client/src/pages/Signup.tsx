@@ -19,7 +19,6 @@ export default function Signup() {
     firstName: "",
     lastName: "",
     classLevel: "",
-    studentNumber: "",
   });
   const [error, setError] = useState("");
 
@@ -31,7 +30,6 @@ export default function Signup() {
         firstName: data.firstName,
         lastName: data.lastName,
         classLevel: data.classLevel,
-        studentNumber: data.studentNumber ? parseInt(data.studentNumber) : undefined,
       });
       return res.json();
     },
@@ -139,19 +137,6 @@ export default function Signup() {
                   onChange={handleChange}
                   className="rounded-xl border-slate-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all"
                   required
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="studentNumber">เลขที่นั่งสอบ (ไม่บังคับ)</Label>
-                <Input
-                  id="studentNumber"
-                  name="studentNumber"
-                  placeholder="เช่น 101"
-                  type="number"
-                  value={formData.studentNumber}
-                  onChange={handleChange}
-                  className="rounded-xl border-slate-200 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all"
                 />
               </div>
 

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Navbar } from "@/components/Navbar";
 import { useAuth } from "@/hooks/use-auth";
 import { useGoodnessRecords } from "@/hooks/use-goodness";
@@ -30,9 +30,13 @@ export default function AdminDashboard() {
   const { user } = useAuth();
   const [, setLocation] = useLocation();
 
+  useEffect(() => {
+    if (!user || user.role !== 'admin') {
+      setLocation("/");
+    }
+  }, [user, setLocation]);
+
   if (!user || user.role !== 'admin') {
-    // Basic protection, though middleware/backend should also handle
-    setLocation("/");
     return null;
   }
 
