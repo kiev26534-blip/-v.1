@@ -98,6 +98,37 @@ export async function registerRoutes(
     res.status(401).json({ message: "Unauthorized" });
   });
 
+  app.post(api.auth.signup.path, async (req, res) => {
+    try {
+      const input = api.auth.signup.input.parse(req.body);
+      
+      // Check if user already exists
+      const existing = await storage.getUserByUsername(input.username);
+      if (existing) return res.status(400).json({ message: "Username already exists" });
+      
+      // Hash password and create user
+      const hashedPassword = await hashPassword(input.password);
+      const user = await storage.createUser({
+        username: input.username,
+        password: hashedPassword,
+        firstName: input.firstName,
+        lastName: input.lastName,
+        classLevel: input.classLevel,
+        studentNumber: input.studentNumber,
+        role: "student",
+      });
+      
+      // Automatically log in the new user
+      req.logIn(user, (err) => {
+        if (err) return res.status(500).json({ message: "Error logging in" });
+        res.status(201).json(user);
+      });
+    } catch (err) {
+      if (err instanceof z.ZodError) return res.status(400).json({ message: err.errors[0].message });
+      throw err;
+    }
+  });
+
   // Users (Admin only to list/edit usually, but we'll allow listing for now if needed, or stick to admin)
   app.get(api.users.list.path, requireAdmin, async (req, res) => {
     const users = await storage.getUsers();

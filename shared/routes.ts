@@ -52,6 +52,22 @@ export const api = {
         401: errorSchemas.unauthorized,
       },
     },
+    signup: {
+      method: 'POST' as const,
+      path: '/api/auth/signup',
+      input: z.object({
+        username: z.string(),
+        password: z.string(),
+        firstName: z.string(),
+        lastName: z.string(),
+        classLevel: z.string(),
+        studentNumber: z.number().optional(),
+      }),
+      responses: {
+        201: z.custom<typeof users.$inferSelect>(),
+        400: errorSchemas.validation,
+      },
+    },
   },
   users: {
     list: {

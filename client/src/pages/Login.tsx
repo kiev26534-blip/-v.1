@@ -88,9 +88,15 @@ export default function Login() {
               </Button>
             </form>
           </CardContent>
-          <CardFooter className="flex justify-center pb-8 pt-2">
+          <CardFooter className="flex flex-col items-center gap-3 pb-8 pt-2">
             <p className="text-sm text-slate-400">
-              ระบบสภานักเรียน 2567
+              ระบบสภานักเรียนปี 69
+            </p>
+            <p className="text-sm text-slate-500">
+              ยังไม่มีบัญชี?{" "}
+              <Link href="/signup" className="text-blue-600 hover:text-blue-700 font-semibold">
+                สมัครสมาชิก
+              </Link>
             </p>
           </CardFooter>
         </Card>
