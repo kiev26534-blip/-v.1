@@ -33,7 +33,8 @@ export default function Signup() {
       return res.json();
     },
     onSuccess: () => {
-      navigate("/dashboard");
+      setError("");
+      navigate("/login");
     },
     onError: (err: any) => {
       setError(err.message || "ข้อผิดพลาดในการสมัครสมาชิก");
